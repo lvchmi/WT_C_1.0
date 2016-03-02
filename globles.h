@@ -31,7 +31,7 @@ typedef enum
 
 extern FILE* source; /* source code text file */
 extern FILE* listing; /* listing output text file */
-extern FILE* code; /* code text file for TM simulator */
+extern FILE* code; /* code text file for asm */
 
 extern int lineno; /* source line number for listing */
 
@@ -61,5 +61,12 @@ typedef struct treeNode
    } TreeNode;
 
 extern int Error;
+
+/* allocate and set tracing flags */
+extern int EchoSource; //源代码输出
+extern int TraceScan; //分析过程
+extern int TraceParse; //语法树（syntax tree）
+extern int TraceAnalyze; //标识符表
+extern int TraceCode; //给目标代码生成注释
 
 #endif // _GLOBALS_H_

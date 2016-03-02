@@ -5,7 +5,7 @@
 	"parse.h"
 	"util.h"
 
-1456904498 d:\gitcompiler\main\comp\globles.h
+1456924339 d:\gitcompiler\main\comp\globles.h
 	<stdio.h>
 	<stdlib.h>
 	<ctype.h>
@@ -20,7 +20,7 @@
 
 1456839703 d:\gitcompiler\main\comp\util.h
 
-1456907666 source:d:\gitcompiler\main\comp\util.cpp
+1456918984 source:d:\gitcompiler\main\comp\util.cpp
 	"globles.h"
 	"util.h"
 
@@ -31,4 +31,19 @@
 	"parse.h"
 
 1456836798 d:\gitcompiler\main\comp\parse.h
+
+1456923654 source:d:\gitcompiler\main\comp\symbtab.cpp
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"symbTab.h"
+
+1456923574 d:\gitcompiler\main\comp\symbtab.h
+
+1456924498 source:d:\gitcompiler\main\comp\symbanalyze.cpp
+	"globles.h"
+	"symbTab.h"
+	"symbAnalyze.h"
+
+1456924498 d:\gitcompiler\main\comp\symbanalyze.h
 
