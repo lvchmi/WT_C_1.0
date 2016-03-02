@@ -1,0 +1,34 @@
+# depslib dependency file v1.0
+1456904403 source:d:\gitcompiler\main\comp\main.cpp
+	"globles.h"
+	"scan.h"
+	"parse.h"
+	"util.h"
+
+1456904498 d:\gitcompiler\main\comp\globles.h
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+
+1456824022 d:\gitcompiler\main\comp\scan.h
+
+1456917974 source:d:\gitcompiler\main\comp\scan.cpp
+	"globles.h"
+	"scan.h"
+	"util.h"
+
+1456839703 d:\gitcompiler\main\comp\util.h
+
+1456907666 source:d:\gitcompiler\main\comp\util.cpp
+	"globles.h"
+	"util.h"
+
+1456918898 source:d:\gitcompiler\main\comp\parse.cpp
+	"globles.h"
+	"util.h"
+	"scan.h"
+	"parse.h"
+
+1456836798 d:\gitcompiler\main\comp\parse.h
+

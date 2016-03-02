@@ -1,0 +1,21 @@
+int a;
+int b;
+char c;
+a=3;
+b=4;
+a=a-b+2*3;
+if(a)
+{
+	for(a=1;a<6;a=a+1)
+	{
+		b=b+a;
+	}
+	a=b;
+} else{
+	while(a<0)
+	{
+		b=b+1;
+		a=a-1;
+	}
+	a=0-b;
+}
