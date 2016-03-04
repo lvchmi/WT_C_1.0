@@ -2,9 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "symbTab.h"
-
-/* SIZE is the size of the hash table */
-#define SIZE 211
+#include "globles.h"
 
 /* SHIFT is the power of two used as multiplier
    in hash function  */
@@ -20,28 +18,6 @@ static int hash ( char * key )
   }
   return temp;
 }
-
-/* the list of line numbers of the source
- * code in which a variable is referenced
- */
-typedef struct LineListRec
-   { int lineno;
-     struct LineListRec * next;
-   } * LineList;
-
-/* The record in the bucket lists for
- * each variable, including name,
- * assigned memory location, and
- * the list of line numbers in which
- * it appears in the source code
- */
-typedef struct BucketListRec
-   { char * name;
-     LineList lines;
-     int memloc ; /* memory location for variable */
-     struct BucketListRec * next;
-   } * BucketList;
-
 /* the hash table */
 static BucketList hashTable[SIZE];
 
@@ -110,3 +86,16 @@ void printSymTab(FILE * listing)
     }
   }
 } /* printSymTab */
+
+void codeTitle(void)
+{
+	int i;
+	for(i=0; i<SIZE; ++i)
+	{
+		if(hashTable[i] != NULL)
+		{
+			BucketList l = hashTable[i];
+			fprintf(code, "%s DW 00000000h\n", l->name);
+		}
+	}
+}

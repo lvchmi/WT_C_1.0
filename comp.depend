@@ -1,11 +1,13 @@
 # depslib dependency file v1.0
-1456904403 source:d:\gitcompiler\main\comp\main.cpp
+1457062003 source:d:\gitcompiler\main\comp\main.cpp
 	"globles.h"
 	"scan.h"
 	"parse.h"
 	"util.h"
+	"symbAnalyze.h"
+	"asmCode.h"
 
-1456924339 d:\gitcompiler\main\comp\globles.h
+1456926418 d:\gitcompiler\main\comp\globles.h
 	<stdio.h>
 	<stdlib.h>
 	<ctype.h>
@@ -32,13 +34,14 @@
 
 1456836798 d:\gitcompiler\main\comp\parse.h
 
-1456923654 source:d:\gitcompiler\main\comp\symbtab.cpp
+1457061593 source:d:\gitcompiler\main\comp\symbtab.cpp
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"symbTab.h"
+	"globles.h"
 
-1456923574 d:\gitcompiler\main\comp\symbtab.h
+1457061593 d:\gitcompiler\main\comp\symbtab.h
 
 1456924498 source:d:\gitcompiler\main\comp\symbanalyze.cpp
 	"globles.h"
@@ -46,4 +49,11 @@
 	"symbAnalyze.h"
 
 1456924498 d:\gitcompiler\main\comp\symbanalyze.h
+
+1457061972 source:d:\gitcompiler\main\comp\asmcode.cpp
+	"globles.h"
+	"symbTab.h"
+	"asmCode.h"
+
+1457011932 d:\gitcompiler\main\comp\asmcode.h
 

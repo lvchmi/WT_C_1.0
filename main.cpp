@@ -3,6 +3,7 @@
 #include "parse.h"
 #include "util.h"
 #include "symbAnalyze.h"
+#include "asmCode.h"
 
 /* allocate global variables */
 int lineno = 0;
@@ -46,7 +47,20 @@ int main( int argc, char * argv[] )
     typeCheck(syntaxTree);
     if (TraceAnalyze) fprintf(listing,"\nType Checking Finished\n");
   }
-
+ if (! Error)
+  { char * codefile;
+    int fnlen = strcspn(pgm,".");
+    codefile = (char *) calloc(fnlen+5, sizeof(char));
+    strncpy(codefile,pgm,fnlen);
+    strcat(codefile,".asm");
+    code = fopen(codefile,"w");
+    if (code == NULL)
+    { printf("Unable to open %s\n",codefile);
+      exit(1);
+    }
+    codePrin(syntaxTree,codefile);
+    fclose(code);
+  }
    fclose(source);
 
   return 0;

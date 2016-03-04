@@ -31,12 +31,18 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="asmCode.cpp" />
+		<Unit filename="asmCode.h" />
 		<Unit filename="globles.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="parse.cpp" />
 		<Unit filename="parse.h" />
 		<Unit filename="scan.cpp" />
 		<Unit filename="scan.h" />
+		<Unit filename="symbAnalyze.cpp" />
+		<Unit filename="symbAnalyze.h" />
+		<Unit filename="symbTab.cpp" />
+		<Unit filename="symbTab.h" />
 		<Unit filename="util.cpp" />
 		<Unit filename="util.h" />
 		<Extensions>
