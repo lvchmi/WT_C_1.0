@@ -1,8 +1,7 @@
 #include "globles.h"
 #include "util.h"
 
-/* Procedure printToken prints a token
- * and its lexeme to the listing file
+/* 打印终结符
  */
 void printToken( TokenType token, const char* tokenString )
 { switch (token)
@@ -45,8 +44,7 @@ void printToken( TokenType token, const char* tokenString )
   }
 }
 
-/* Function newStmtNode creates a new statement
- * node for syntax tree construction
+/* 创建一个语法树语句节点
  */
 TreeNode * newStmtNode(StmtKind kind)
 { TreeNode * t = (TreeNode *) malloc(sizeof(TreeNode));
@@ -63,8 +61,7 @@ TreeNode * newStmtNode(StmtKind kind)
   return t;
 }
 
-/* Function newExpNode creates a new expression
- * node for syntax tree construction
+/* 创建一个语法树算式节点
  */
 TreeNode * newExpNode(ExpKind kind)
 { TreeNode * t = (TreeNode *) malloc(sizeof(TreeNode));
@@ -82,8 +79,7 @@ TreeNode * newExpNode(ExpKind kind)
   return t;
 }
 
-/* Function copyString allocates and makes a new
- * copy of an existing string
+/* 复制字符串
  */
 char * copyString(char * s)
 { int n;
@@ -97,24 +93,18 @@ char * copyString(char * s)
   return t;
 }
 
-/* Variable indentno is used by printTree to
- * store current number of spaces to indent
- */
-static int indentno = 0;
+static int indentno = 0; //缩进
 
-/* macros to increase/decrease indentation */
 #define INDENT indentno+=2
 #define UNINDENT indentno-=2
 
-/* printSpaces indents by printing spaces */
 static void printSpaces(void)
 { int i;
   for (i=0;i<indentno;i++)
     fprintf(listing," ");
 }
 
-/* procedure printTree prints a syntax tree to the
- * listing file using indentation to indicate subtrees
+/* 打印语法树
  */
 void printTree( TreeNode * tree )
 { int i;

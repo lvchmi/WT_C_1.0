@@ -2,26 +2,23 @@
 #include "scan.h"
 #include "util.h"
 
-/* states in scanner DFA */
+/* 自动机的各个状态 */
 typedef enum
    { START,INASSIGN,INCOMMENT,INNUM,INID,DONE }
    StateType;
 
-/* lexeme of identifier or reserved word */
+/* ID或保留字的负号串值 */
 char tokenString[MAXTOKENLEN+1];
 
-/* BUFLEN = length of the input buffer for
-   source code lines */
+/*源文件每行最大符号数 */
 #define BUFLEN 256
 
-static char lineBuf[BUFLEN]; /* holds the current line */
-static int linepos = 0; /* current position in LineBuf */
-static int bufsize = 0; /* current size of buffer string */
+static char lineBuf[BUFLEN]; /* 当前读取的符号串 */
+static int linepos = 0; /* 词法分析时在符号串中的实时位置 */
+static int bufsize = 0; /* 实际每次读取的符号数 */
 static int EOF_flag = FALSE; /* corrects ungetNextChar behavior on EOF */
 
-/* getNextChar fetches the next non-blank character
-   from lineBuf, reading in a new line if lineBuf is
-   exhausted */
+/* getNextChar 从当前lineBuf中读取下一个非空字符读到\n读取下一行 */
 static int getNextChar(void)
 { if (!(linepos < bufsize))
   { lineno++;
@@ -32,19 +29,18 @@ static int getNextChar(void)
       return lineBuf[linepos++];
     }
     else
-    { EOF_flag = TRUE;
+    { EOF_flag = TRUE; //读到文件结束不再可以读到符号
       return EOF;
     }
   }
   else return lineBuf[linepos++];
 }
 
-/* ungetNextChar backtracks one character
-   in lineBuf */
+/* 后退一个符号 */
 static void ungetNextChar(void)
 { if (!EOF_flag) linepos-- ;}
 
-/* lookup table of reserved words */
+/* 保留字结构 */
 static struct
     { char* str;
       TokenType tok;
@@ -52,8 +48,7 @@ static struct
    = {{"if",IF},{"else",ELSE},{"for",FOR},
       {"while",WHILE},{"int",INT},{"char",CHAR}};  //保留字声明
 
-/* lookup an identifier to see if it is a reserved word */
-/* uses linear search */
+/* 查看ID是否为保留字*/
 static TokenType reservedLookup (char * s)
 { int i;
   for (i=0;i<MAXRESERVED;i++)
@@ -63,19 +58,18 @@ static TokenType reservedLookup (char * s)
 }
 
 /****************************************/
-/* the primary function of the scanner  */
+/* 词法分析的基本函数  */
 /****************************************/
-/* function getToken returns the
- * next token in source file
+/* 返回下一个终结符（token）
  */
 TokenType getToken(void)
 {  /* index for storing into tokenString */
    int tokenStringIndex = 0;
-   /* holds current token to be returned */
+   /* 用于返回的当前token */
    TokenType currentToken;
-   /* current state - always begins at START */
+   /* 自动机分析时的当前状态*/
    StateType state = START;
-   /* flag to indicate save to tokenString */
+   /* 是否保留token已用于建立语法树(,),{,},;不保留 */
    int save;
    while (state != DONE)
    { int c = getNextChar();
@@ -84,17 +78,17 @@ TokenType getToken(void)
      switch (state)
      { case START:
          if (isdigit(c))
-           state = INNUM;
+           state = INNUM; //需继续读取所有数字
          else if (isalpha(c))
-           state = INID;
+           state = INID; //需继续读取所有字符
          else if (c == '=')//赋值
           { state = INASSIGN;
             currentToken = ASSIGN;
           }
-         else if ((c == ' ') || (c == '\t') || (c == '\n'))
+         else if ((c == ' ') || (c == '\t') || (c == '\n')) //忽略空字符
            save = FALSE;
          else
-         { state = DONE;
+         { state = DONE; //非ID，NUM，赋值，等于
            switch (c)
            { case EOF:
                save = FALSE;
@@ -131,7 +125,7 @@ TokenType getToken(void)
 				currentToken = RBRACE;
 				break;
              default:
-               currentToken = ERROR;
+               currentToken = ERROR; //不可识别token
                break;
            }
          }
@@ -142,19 +136,11 @@ TokenType getToken(void)
 			currentToken = EQ;
          }else{
          	save = FALSE;
-         	ungetNextChar();}
-
-        /* else
-         { // backup in the input
-           //ungetNextChar();
-           //save = FALSE;
-           //currentToken = ERROR;
-           currentToken = ASSIGN;
-         }*/
+         	ungetNextChar();} //非等于，后退一个字符
          break;
        case INNUM:
          if (!isdigit(c))
-         { /* backup in the input */
+         { /* 数字识别结束，后退一个字符 */
            ungetNextChar();
            save = FALSE;
            state = DONE;
@@ -163,7 +149,7 @@ TokenType getToken(void)
          break;
        case INID:
          if (!isalpha(c))
-         { /* backup in the input */
+         { /* ID识别结束，后退一个字符 */
            ungetNextChar();
            save = FALSE;
            state = DONE;
@@ -171,7 +157,7 @@ TokenType getToken(void)
          }
          break;
        case DONE:
-       default: /* should never happen */
+       default: /* DNF运行出错 */
          fprintf(listing,"Scanner Bug: state= %d\n",state);
          state = DONE;
          currentToken = ERROR;
@@ -185,7 +171,7 @@ TokenType getToken(void)
          currentToken = reservedLookup(tokenString);
      }
    }
-   if (1) {
+   if (TraceScan) {
      fprintf(listing,"\t%d: ",lineno);
      printToken(currentToken,tokenString);
    }

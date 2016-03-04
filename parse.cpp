@@ -3,9 +3,9 @@
 #include "scan.h"
 #include "parse.h"
 
-static TokenType token; /* holds current token */
+static TokenType token; /* 保存当前token */
 
-/* function prototypes for recursive calls */
+/* 语法分析基本函数 */
 static TreeNode * statement_list(void);
 static TreeNode * statement(void);
 static TreeNode * if_stmt(void);
@@ -19,22 +19,22 @@ static TreeNode * simple_exp(void);
 static TreeNode * term(void);
 static TreeNode * factor(void);
 
-static void syntaxError(char * message)
+static void syntaxError(char * message) //非法语法
 { fprintf(listing,"\n>>> ");
   fprintf(listing,"Syntax error at line %d: %s",lineno,message);
   Error = TRUE;
 }
 
-static void match(TokenType expected)
+static void match(TokenType expected) //获取下一个token
 { if (token == expected) token = getToken();
   else {
-    syntaxError("mac unexpected token -> ");
+    syntaxError("unexpected token -> ");
     printToken(token,tokenString);
     fprintf(listing,"      ");
   }
 }
 
-TreeNode * statement_list(void)
+TreeNode * statement_list(void) //开始符号 statement_list  -> statement{ statement}
 { TreeNode * t = statement();
   TreeNode * p = t;
   while ((token!=ENDFILE) &&(token!=ELSE))
@@ -51,7 +51,7 @@ TreeNode * statement_list(void)
   return t;
 }
 
-TreeNode * statement(void)
+TreeNode * statement(void) //statement  -> expression| if_stmt| while_stmt|for_stmt|var_stmt|assign_stmt
 { TreeNode * t = NULL;
   switch (token) {
     case IF : t = if_stmt(); break;
@@ -62,7 +62,7 @@ TreeNode * statement(void)
 	case CHAR :
 		t = var_stmt(); break;
 	case RBRACE : match(RBRACE); break;
-    default : syntaxError("sta unexpected token -> ");
+    default : syntaxError("unexpected token -> ");
               printToken(token,tokenString);
               token = getToken();
               break;
@@ -70,7 +70,7 @@ TreeNode * statement(void)
   return t;
 }
 
-TreeNode * if_stmt(void)
+TreeNode * if_stmt(void)//if_stmt -> IF '(' expression ')' '{'statement_list'}' [ELSE '{'statement_list'}']
 { TreeNode * t = newStmtNode(IfK);
   match(IF);match(LPAREN);
   if (t!=NULL) t->child[0] = exp();
@@ -85,7 +85,7 @@ TreeNode * if_stmt(void)
   return t;
 }
 
-TreeNode * for_stmt(void)
+TreeNode * for_stmt(void) //for_stmt -> FOR '('expression';'expression';'expression')''{'statement_list'}'
 {
 	TreeNode * t = newStmtNode(ForK);
 	match(FOR); match(LPAREN);
@@ -100,7 +100,7 @@ TreeNode * for_stmt(void)
 	return t;
 }
 
-TreeNode * while_stmt(void)
+TreeNode * while_stmt(void) //while_stmt -> WHILE '(' expression ')' '{'statement_list'}'
 {
 	TreeNode * t = newStmtNode(WhileK);
 	match(WHILE); match(LPAREN);
@@ -111,7 +111,7 @@ TreeNode * while_stmt(void)
 	return t;
 }
 
-TreeNode * assign_list(void)
+TreeNode * assign_list(void) //assign_stmt -> ID = expression
 {
 	TreeNode * t = newStmtNode(AssignK);
 	if((t!=NULL)&&token==ID)
@@ -121,14 +121,14 @@ TreeNode * assign_list(void)
 	return t;
 }
 
-TreeNode * assign_stmt(void)
+TreeNode * assign_stmt(void) //(后有分号的算数表达式)
 {
 	TreeNode * t = assign_list();
 	match(SEMI);
 	return t;
 }
 
-TreeNode * var_stmt(void)
+TreeNode * var_stmt(void) //var_declaration -> type_specifer ID ';'
 {
 	TreeNode * t = newStmtNode(Vark);
 	switch(token)
@@ -141,7 +141,7 @@ TreeNode * var_stmt(void)
 	return t;
 }
 
-TreeNode * exp(void)
+TreeNode * exp(void) //expression -> simple_expression [relop simple_expression]
 {
 	TreeNode * t = simple_exp();
 	if((token == LT) || (token == EQ)){
@@ -157,7 +157,7 @@ TreeNode * exp(void)
 	return t;
 }
 
-TreeNode * simple_exp(void)
+TreeNode * simple_exp(void) //simple_expression -> term [addop simple_expression]
 {
 	TreeNode * t = term();
   while ((token==PLUS)||(token==MINUS))
@@ -173,7 +173,7 @@ TreeNode * simple_exp(void)
   return t;
 }
 
-TreeNode * term(void)
+TreeNode * term(void) //term -> factor [mulop term]
 { TreeNode * t = factor();
   while ((token==MUL)||(token==DIV))
   { TreeNode * p = newExpNode(OpK);
@@ -188,7 +188,7 @@ TreeNode * term(void)
   return t;
 }
 
-TreeNode * factor(void)
+TreeNode * factor(void) //factor -> NUM |ID |(exp)
 { TreeNode * t = NULL;
   switch (token) {
     case NUM :

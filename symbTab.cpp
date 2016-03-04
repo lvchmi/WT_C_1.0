@@ -4,11 +4,9 @@
 #include "symbTab.h"
 #include "globles.h"
 
-/* SHIFT is the power of two used as multiplier
-   in hash function  */
 #define SHIFT 4
 
-/* the hash function */
+/* hash函数用来找到符号位置 */
 static int hash ( char * key )
 { int temp = 0;
   int i = 0;
@@ -18,20 +16,17 @@ static int hash ( char * key )
   }
   return temp;
 }
-/* the hash table */
+/*存储符号 */
 static BucketList hashTable[SIZE];
 
-/* Procedure st_insert inserts line numbers and
- * memory locations into the symbol table
- * loc = memory location is inserted only the
- * first time, otherwise ignored
+/* 向符号表插入一个节点
  */
 void st_insert( char * name, int lineno, int loc )
 { int h = hash(name);
   BucketList l =  hashTable[h];
   while ((l != NULL) && (strcmp(name,l->name) != 0))
     l = l->next;
-  if (l == NULL) /* variable not yet in table */
+  if (l == NULL) /* 变量不再表中 */
   { l = (BucketList) malloc(sizeof(struct BucketListRec));
     l->name = name;
     l->lines = (LineList) malloc(sizeof(struct LineListRec));
@@ -40,7 +35,7 @@ void st_insert( char * name, int lineno, int loc )
     l->lines->next = NULL;
     l->next = hashTable[h];
     hashTable[h] = l; }
-  else /* found in table, so just add line number */
+  else /* 已存在只插入行号 */
   { LineList t = l->lines;
     while (t->next != NULL) t = t->next;
     t->next = (LineList) malloc(sizeof(struct LineListRec));
@@ -49,8 +44,7 @@ void st_insert( char * name, int lineno, int loc )
   }
 } /* st_insert */
 
-/* Function st_lookup returns the memory
- * location of a variable or -1 if not found
+/* 是否在hash符号表中或返回当前出现的行号
  */
 int st_lookup ( char * name )
 { int h = hash(name);
@@ -61,9 +55,7 @@ int st_lookup ( char * name )
   else return l->memloc;
 }
 
-/* Procedure printSymTab prints a formatted
- * listing of the symbol table contents
- * to the listing file
+/* 打印符号表
  */
 void printSymTab(FILE * listing)
 { int i;
@@ -87,7 +79,7 @@ void printSymTab(FILE * listing)
   }
 } /* printSymTab */
 
-void codeTitle(void)
+void codeTitle(void) //在生成代码时，根据符号表生成汇编文件DATA部分
 {
 	int i;
 	for(i=0; i<SIZE; ++i)

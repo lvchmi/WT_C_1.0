@@ -2,7 +2,7 @@
 #include "symbTab.h"
 #include "symbAnalyze.h"
 
-/* counter for variable memory locations */
+/* 出现次序 */
 static int location = 0;
 
 /* Procedure traverse is a generic recursive
@@ -24,19 +24,12 @@ static void traverse( TreeNode * t,
   }
 }
 
-/* nullProc is a do-nothing procedure to
- * generate preorder-only or postorder-only
- * traversals from traverse
- */
 static void nullProc(TreeNode * t)
 { if (t==NULL) return;
   else return;
 }
 
-/* Procedure insertNode inserts
- * identifiers stored in t into
- * the symbol table
- */
+/*遍历语法树查找赋值和声明语句建立符号表*/
 static void insertNode( TreeNode * t)
 { switch (t->nodekind)
   { case StmtK:
@@ -49,7 +42,7 @@ static void insertNode( TreeNode * t)
           else
           /* already in table, so ignore location,
              add line number of use only */
-            st_insert(t->attr.name,t->lineno,0);
+            st_insert(t->attr.name,t->lineno,0);//次序随意（无用）
           break;
         default:
           break;
@@ -64,7 +57,7 @@ static void insertNode( TreeNode * t)
           else
           /* already in table, so ignore location,
              add line number of use only */
-            st_insert(t->attr.name,t->lineno,0);
+            st_insert(t->attr.name,t->lineno,0); //同Vark
           break;
         default:
           break;
@@ -75,9 +68,6 @@ static void insertNode( TreeNode * t)
   }
 }
 
-/* Function buildSymtab constructs the symbol
- * table by preorder traversal of the syntax tree
- */
 void buildSymtab(TreeNode * syntaxTree)
 { traverse(syntaxTree,insertNode,nullProc);
   if (TraceAnalyze)
@@ -91,8 +81,7 @@ static void typeError(TreeNode * t, char * message)
   Error = TRUE;
 }
 
-/* Procedure checkNode performs
- * type checking at a single tree node
+/* 类型检查（待用）
  */
 static void checkNode(TreeNode * t)
 { switch (t->nodekind)
@@ -143,9 +132,7 @@ static void checkNode(TreeNode * t)
   }
 }
 
-/* Procedure typeCheck performs type checking
- * by a postorder syntax tree traversal
- */
+
 void typeCheck(TreeNode * syntaxTree)
 { traverse(syntaxTree,nullProc,checkNode);
 }

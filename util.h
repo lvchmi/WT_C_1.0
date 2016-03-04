@@ -2,28 +2,23 @@
 #define _UTIL_H_
 
 
-/* Procedure printToken prints a token
- * and its lexeme to the listing file
+/* 打印token和他的符号值
  */
 void printToken( TokenType, const char* );
 
-/* Function newStmtNode creates a new statement
- * node for syntax tree construction
+/* 创建一个语法树语句节点
  */
 TreeNode * newStmtNode(StmtKind);
 
-/* Function newExpNode creates a new expression
- * node for syntax tree construction
+/* 创建一个语法树算式节点
  */
 TreeNode * newExpNode(ExpKind);
 
-/* Function copyString allocates and makes a new
- * copy of an existing string
+/* 复制字符串
  */
 char * copyString( char * );
 
-/* procedure printTree prints a syntax tree to the
- * listing file using indentation to indicate subtrees
+/* 打印语法树
  */
 void printTree( TreeNode * );
 

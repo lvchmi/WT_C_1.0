@@ -5,10 +5,10 @@
 static int tmpOffset = 0;
 static int jLabel = 0; //跳转标识
 
-/* prototype for internal recursive code generator */
+/* 生成代码 */
 static void codeGen (TreeNode * tree);
 
-static void genStmt(TreeNode * tree)
+static void genStmt(TreeNode * tree) //语句汇编生成
 {
 	TreeNode * p1, * p2, * p3, * p4;
 	int label1, label2;
@@ -106,7 +106,7 @@ static void genStmt(TreeNode * tree)
 	}
 }
 
-static void genExp(TreeNode * tree)
+static void genExp(TreeNode * tree) //算式汇编生成
 {
 	TreeNode * p1, * p2;
 	switch(tree->kind.exp)
@@ -147,7 +147,7 @@ static void genExp(TreeNode * tree)
 	}
 }
 
-static void codeGen(TreeNode * tree)
+static void codeGen(TreeNode * tree) //判断是stmt或exp
 {
 	if (tree != NULL)
 	{ switch (tree->nodekind) {
@@ -164,7 +164,7 @@ static void codeGen(TreeNode * tree)
 	}
 }
 
-void codePrin(TreeNode * syntaxTree, char * codefile)
+void codePrin(TreeNode * syntaxTree) //打印头部和尾部
 {
 	fprintf(code, ".MODEL SMALL\n");
 	fprintf(code, ".STACK 200\n");

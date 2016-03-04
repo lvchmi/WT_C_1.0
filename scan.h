@@ -1,14 +1,13 @@
 #ifndef _SCAN_H_
 #define _SCAN_H_
 
-/* MAXTOKENLEN is the maximum size of a token */
+/* 终结符的最大符号数 */
 #define MAXTOKENLEN 40
 
-/* tokenString array stores the lexeme of each token */
+/* 终结符的符号串 */
 extern char tokenString[MAXTOKENLEN+1];
 
-/* function getToken returns the
- * next token in source file
+/* 返回源文件中的下一个token
  */
 TokenType getToken(void);
 

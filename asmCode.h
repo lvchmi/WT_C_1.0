@@ -1,6 +1,7 @@
 #ifndef ASMCODE_H_INCLUDED
 #define ASMCODE_H_INCLUDED
 
-void codePrin(TreeNode * syntaxTree, char * codefile);
+/*´òÓ¡»ã±à´úÂë*/
+void codePrin(TreeNode * syntaxTree);
 
 #endif // ASMCODE_H_INCLUDED

@@ -15,58 +15,55 @@
 #define TRUE 1
 #endif
 
-/* MAXRESERVED = the number of reserved words */
+/* 保留字的最大值 */
 #define MAXRESERVED 6
 
 typedef enum
-    /* book-keeping tokens */
+
    {ENDFILE,ERROR,
-    /* reserved words */
+    /* 保留字 */
     IF,ELSE,FOR,WHILE,INT,CHAR,
-    /* multicharacter tokens */
+    /* 标识符和数字 */
     ID,NUM,
-    /* special symbols */
+    /* 特殊标识符 */
     ASSIGN,EQ,LT,PLUS,MINUS,MUL,DIV,LPAREN,RPAREN,LBRACE,RBRACE,SEMI
    } TokenType;
 
-extern FILE* source; /* source code text file */
-extern FILE* listing; /* listing output text file */
-extern FILE* code; /* code text file for asm */
+extern FILE* source;
+extern FILE* listing;
+extern FILE* code;
 
-extern int lineno; /* source line number for listing */
+extern int lineno; /* 此法分析过程中的源文件行号 */
 
 /**************************************************/
-/***********   Syntax tree for parsing ************/
+/***********   建立语法树要用到的节点建立 ************/
 /**************************************************/
 
-typedef enum {StmtK,ExpK} NodeKind;
-typedef enum {IfK,ForK,WhileK,AssignK,Vark} StmtKind;
-typedef enum {OpK,ConstK,IdK} ExpKind;
+typedef enum {StmtK,ExpK} NodeKind; //节点类型，语句或算术表达式
+typedef enum {IfK,ForK,WhileK,AssignK,Vark} StmtKind; //语句类型
+typedef enum {OpK,ConstK,IdK} ExpKind; //算数表达式类型
 
-/* ExpType is used for type checking */
+/* 变量类型 */
 typedef enum {Void,Integer,Boolean} ExpType;
 
-#define MAXCHILDREN 4
+#define MAXCHILDREN 4 //节点的最大子节点数
 
 typedef struct treeNode
    { struct treeNode * child[MAXCHILDREN];
-     struct treeNode * sibling;
+     struct treeNode * sibling; //下一条语句
      int lineno;
      NodeKind nodekind;
      union { StmtKind stmt; ExpKind exp;} kind;
      union { TokenType op;
              int val;
              char * name; } attr;
-     ExpType type; /* for type checking of exps */
+     ExpType type; /* 算数表达式值类型 */
    } TreeNode;
 
 extern int Error;
 
-/* allocate and set tracing flags */
-extern int EchoSource; //源代码输出
 extern int TraceScan; //分析过程
 extern int TraceParse; //语法树（syntax tree）
 extern int TraceAnalyze; //标识符表
-extern int TraceCode; //给目标代码生成注释
 
 #endif // _GLOBALS_H_

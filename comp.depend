@@ -7,53 +7,53 @@
 	"symbAnalyze.h"
 	"asmCode.h"
 
-1456926418 d:\gitcompiler\main\comp\globles.h
+1457081074 d:\gitcompiler\main\comp\globles.h
 	<stdio.h>
 	<stdlib.h>
 	<ctype.h>
 	<string.h>
 
-1456824022 d:\gitcompiler\main\comp\scan.h
+1457081061 d:\gitcompiler\main\comp\scan.h
 
-1456917974 source:d:\gitcompiler\main\comp\scan.cpp
+1457081058 source:d:\gitcompiler\main\comp\scan.cpp
 	"globles.h"
 	"scan.h"
 	"util.h"
 
-1456839703 d:\gitcompiler\main\comp\util.h
+1457082578 d:\gitcompiler\main\comp\util.h
 
-1456918984 source:d:\gitcompiler\main\comp\util.cpp
+1457082582 source:d:\gitcompiler\main\comp\util.cpp
 	"globles.h"
 	"util.h"
 
-1456918898 source:d:\gitcompiler\main\comp\parse.cpp
+1457082203 source:d:\gitcompiler\main\comp\parse.cpp
 	"globles.h"
 	"util.h"
 	"scan.h"
 	"parse.h"
 
-1456836798 d:\gitcompiler\main\comp\parse.h
+1457082207 d:\gitcompiler\main\comp\parse.h
 
-1457061593 source:d:\gitcompiler\main\comp\symbtab.cpp
+1457082942 source:d:\gitcompiler\main\comp\symbtab.cpp
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"symbTab.h"
 	"globles.h"
 
-1457061593 d:\gitcompiler\main\comp\symbtab.h
+1457082943 d:\gitcompiler\main\comp\symbtab.h
 
-1456924498 source:d:\gitcompiler\main\comp\symbanalyze.cpp
+1457083209 source:d:\gitcompiler\main\comp\symbanalyze.cpp
 	"globles.h"
 	"symbTab.h"
 	"symbAnalyze.h"
 
-1456924498 d:\gitcompiler\main\comp\symbanalyze.h
+1457083234 d:\gitcompiler\main\comp\symbanalyze.h
 
-1457061972 source:d:\gitcompiler\main\comp\asmcode.cpp
+1457083344 source:d:\gitcompiler\main\comp\asmcode.cpp
 	"globles.h"
 	"symbTab.h"
 	"asmCode.h"
 
-1457011932 d:\gitcompiler\main\comp\asmcode.h
+1457083349 d:\gitcompiler\main\comp\asmcode.h
 
