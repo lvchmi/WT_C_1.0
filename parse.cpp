@@ -133,8 +133,12 @@ TreeNode * var_stmt(void) //var_declaration -> type_specifer ID ';'
 	TreeNode * t = newStmtNode(Vark);
 	switch(token)
 	{
-		case INT : match(INT); break;
-		case CHAR : match(CHAR); break;
+		case INT :
+			t->type = Integer;
+			match(INT); break;
+		case CHAR :
+			t->type = Char;
+			match(CHAR); break;
 	}
 	if((t!=NULL)&&token==ID) t->attr.name=copyString(tokenString);
 	match(ID); match(SEMI);
@@ -188,7 +192,7 @@ TreeNode * term(void) //term -> factor [mulop term]
   return t;
 }
 
-TreeNode * factor(void) //factor -> NUM |ID |(exp)
+TreeNode * factor(void) //factor -> NUM |ID |'('expression')'
 { TreeNode * t = NULL;
   switch (token) {
     case NUM :
@@ -209,7 +213,7 @@ TreeNode * factor(void) //factor -> NUM |ID |(exp)
       match(RPAREN);
       break;
     default:
-      syntaxError("fac unexpected token -> ");
+      syntaxError("unexpected token -> ");
       printToken(token,tokenString);
       token = getToken();
       break;

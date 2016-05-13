@@ -44,7 +44,7 @@ typedef enum {IfK,ForK,WhileK,AssignK,Vark} StmtKind; //语句类型
 typedef enum {OpK,ConstK,IdK} ExpKind; //算数表达式类型
 
 /* 变量类型 */
-typedef enum {Void,Integer,Boolean} ExpType;
+typedef enum {Char,Integer,Boolean} ExpType;
 
 #define MAXCHILDREN 4 //节点的最大子节点数
 

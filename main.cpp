@@ -13,9 +13,9 @@ FILE * code;
 int Error = FALSE;
 
 /* 输出控制标识 */
-int TraceScan = FALSE; //分析过程
+int TraceScan = TRUE; //分析过程
 int TraceParse = TRUE; //语法树（syntax tree）
-int TraceAnalyze = FALSE; //标识符表
+int TraceAnalyze = TRUE; //标识符表
 
 int main( int argc, char * argv[] )
 {
@@ -32,7 +32,7 @@ int main( int argc, char * argv[] )
     exit(1);
   }
   listing = stdout;
-  fprintf(listing,"\nTINY COMPILATION: %s\n",pgm);
+  fprintf(listing,"\nTraceScan: %s\n",pgm);
 
    syntaxTree = parse(); //语法分析
    if(TraceParse)
